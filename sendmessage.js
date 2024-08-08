@@ -72,7 +72,7 @@ async function sendBulkMessage(listType) {
 	}
 }
 
-const listType = {
+const list = {
 	fullKitchenerYuvakoList: {
 		contactList: "FullKitchenerList",
 		message: "B1",
@@ -83,4 +83,4 @@ const listType = {
 	},
 };
 
-sendBulkMessage(listType.ambrish);
+sendBulkMessage(list.ambrish);
