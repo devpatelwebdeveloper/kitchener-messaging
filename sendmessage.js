@@ -22,6 +22,7 @@ function sendMessage(phoneNumber, name, messageText) {
 	const escapedMessage = escapeAppleScriptString(messageText);
 
 	// Construct the AppleScript command
+
 	const script = `
 			tell application "Messages"
 					set targetService to 1st service whose service type = SMS
@@ -30,7 +31,6 @@ function sendMessage(phoneNumber, name, messageText) {
 			end tell
 	`;
 
-	// Use single quotes to wrap the AppleScript code and escape single quotes
 	const escapedScript = script.replace(/'/g, "\\'");
 
 	// Execute the AppleScript command
@@ -84,3 +84,18 @@ const list = {
 };
 
 sendBulkMessage(list.ambrish);
+
+/* Test in future
+const script = `
+tell application "Messages"
+	set targetService to first service whose service type = iMessage
+	if available of targetService then
+			set targetBuddy to buddy "{phoneNumber}" of targetService
+	else
+			set targetService to first service whose service type = SMS
+			set targetBuddy to buddy "{phoneNumber}" of targetService
+	end if
+	send "Das Na Das Na Jay Swaminarayan {name}\n\n{escapedMessage}" to targetBuddy
+end tell
+`;
+*/
