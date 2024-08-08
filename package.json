@@ -1,0 +1,15 @@
+{
+  "name": "sendmessage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sendmessage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sendinvitation": "node sendmessage.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^140.0.1"
+  }
+}

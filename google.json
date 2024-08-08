@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "inspiring-folio-245321",
+  "private_key_id": "042d998331833a1b2e94dd4e47125fccb2b7669e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCt5rZliRkDUQYe\nSUusPQa36C3LoQssz1WR8s6Cg8F8rCuutyTgnwZgBHiWzZmyZ4wsyozLa5wed6zP\nuHHf7mmuSAQl4NYycT6WQVnKZvwjxTOpyhrxHVo5aWICWlGdnHanG4JmNWdeg+zo\nkxuJEhKCiI8JPzo9dYeStDj8JVmpwIykLO9ohUTXlC3IaRYqpX91UPjHapBJrmQ2\ngb3QF9o8EPRdg9ct4ZB578xBzkDZt/2vQmWxWZeqzpFFcAGCU2BsDVozghf9Tk3t\nS9IvmgpKFaZu/ksejO0GbP494d/6Fv82pF2OwsTJn/HacvMd+hoCzv69yUFNseT2\n2JC/Nlj9AgMBAAECggEADUoPf8BjmzOGqGtY/1NVj1nMoB5RNI4un53ixqoLb/vX\nRb2Esa6tZcqJrZqOJ4pOtcCP1F7HmjNyjxgtCZwWUuV5fayKKeYqDoD1e+h1VcV0\n7oF9oBXqZm9FeGEPEiCaF6icRTPJD7m8scRGKyoopHWLmr0MdhRkdSNVJH21Nanb\nRfGSaKjo0Jk2+5WgfLuSKqW/cXHD5j28niM+ngiTtmfqyTQfVOhNct37E1yocdHe\nHhZctkQZpV78jArA0RAVYqUCfuw2osuIq/0cvQ3l2O6CGYC0Iq5yy2UEhEje8Vtq\nH0i+YjjWyGG99DYhElBbLeCNYmJPxSUmXvWuJmc2KQKBgQDTyRsXmoQeLQkOF9EL\nJve7XRCZXqcJhwyJvb1N4ghee3tdlTAiMbN0yri0MMmSSSohapqNnWwEHzndKbNV\nP8m3ZOWCPG4HP+ptBX2lt6nczy3ccxLHMKQ5jP89XViyn6f0o30EblUPr7P4ApLt\noxLmfdQccE+eNEFmnOzmYDnGiQKBgQDSNOADREhbQEJ7+gQVyAle0s1r9glsGmdV\nS9tClsH+BXtK/1UFelotXJ2sXG1wx52EjlcD0EKwPEFgXd2FnPQjB4TQ2cqLmIo0\nRiM38r/XDV84GXMHVz3Fg25ysWm3dMP/IKYRbQofAGnu7rTt4V4//hY0aRFNWuWp\noLnVvQih1QKBgDUfkdsm2BMVqtrNIJOSj7uAyaQe+PlL1dpLLMv3ca/5e2VrAari\nGqimHRSd1EIMdjPxoJj7LtgN2R7f0esFWBzXgzZa4CKTZsM4CF9kJYiMs21DtCcg\nzWDePDvxSUltAN09kSNmZZHMufDw/Ff9esU0NNt5VI9TfkA2Brp20qc5AoGAeZtx\nRTKJkZDZZZO8LUWudhcKFD0gMlQMF8JstFc3H1fYfgi9DRA9fySnawGFpss0i201\nVdVz3zTctX1YHGYyrtk4swJsNNooihlRYpqi9SydO30tmL+V0uA4U03j1OhOQxiG\nOmqUgl7g6gNa1Iue1PKPsf5erhu55apAGDDl/4kCgYBOEERgBgr+TVkMEaKvmpXc\nPUOoyI6bVRdvjr+qPDCIRJB813+glN0y0NgTEZ4aJs8sfXgwyK076GzuFsfTacWx\n/CumP+PiLX7qu7Q6bDft/3ov7Qx3nSZeILlGxbLQzfQgX4zvDEJNkj3dOEpEQXko\nvhR9J6FPRpYY2YPh54iiTw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "kitchenermessaging@inspiring-folio-245321.iam.gserviceaccount.com",
+  "client_id": "113924691154297659280",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kitchenermessaging%40inspiring-folio-245321.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
