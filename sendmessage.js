@@ -47,16 +47,16 @@ function sendMessage(phoneNumber, name, messageText) {
 	});
 }
 
-async function sendBulkMessage(message) {
+async function sendBulkMessage(listType) {
 	const response = await sheets.spreadsheets.values.get({
 		spreadsheetId,
-		range: "Message!A1",
+		range: `Message!${listType.message}`,
 	});
 	const messageContent = response.data.values[0][0];
 
 	const res = await sheets.spreadsheets.values.get({
 		spreadsheetId,
-		range: "ContactList!A2:E",
+		range: `${listType.contactList}!A2:E`,
 	});
 
 	const contactList = res.data.values;
@@ -72,4 +72,15 @@ async function sendBulkMessage(message) {
 	}
 }
 
-sendBulkMessage();
+const listType = {
+	fullKitchenerYuvakoList: {
+		contactList: "FullKitchenerList",
+		message: "B1",
+	},
+	ambrish: {
+		contactList: "AmbrishBhaktoList",
+		message: "B2",
+	},
+};
+
+sendBulkMessage(listType.ambrish);
