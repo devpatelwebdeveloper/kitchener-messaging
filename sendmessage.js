@@ -6,7 +6,8 @@ const auth = new google.auth.GoogleAuth({
 	keyFile: "./google.json", // Path to your service account key file.
 	scopes: ["https://www.googleapis.com/auth/spreadsheets"], // Scope for Google Sheets API.
 });
-const spreadsheetId = "1HOJWpBDCLSpiUeklifzmOQ3ySiVa9P0B_7rRr_l9ci0";
+// const spreadsheetId = "1HOJWpBDCLSpiUeklifzmOQ3ySiVa9P0B_7rRr_l9ci0"; Devashish Test Sheet
+const spreadsheetId = "1K10lmYSNGEfnDfj13N858umGQ6wpnVkaDQiIJ59XdzA";
 const sheets = google.sheets({ version: "v4", auth });
 //AUTHentication
 
@@ -27,7 +28,9 @@ function sendMessage(phoneNumber, name, messageText) {
 			tell application "Messages"
 					set targetService to 1st service whose service type = SMS
 					set targetBuddy to buddy "${phoneNumber}" of targetService
-					send "Das Na Das Na Jay Swaminarayan ${name} \n\n ${escapedMessage}" to targetBuddy
+					send "Das Na Das Na Jay Swaminarayan ${
+						name === "no_name" ? "Bhagat" : `${name} Bhai`
+					} \n\n ${escapedMessage}" to targetBuddy
 			end tell
 	`;
 
@@ -47,25 +50,54 @@ function sendMessage(phoneNumber, name, messageText) {
 	});
 }
 
-async function sendBulkMessage(listType) {
+async function sendBulkMessage(contactList, listType) {
 	const response = await sheets.spreadsheets.values.get({
 		spreadsheetId,
-		range: `Message!${listType.message}`,
+		range: `Message!${contactList.message}`,
 	});
-	const messageContent = response.data.values[0][0];
+	const messageContent = response.data.values;
+
+	console.log(messageContent);
 
 	const res = await sheets.spreadsheets.values.get({
 		spreadsheetId,
-		range: `${listType.contactList}!A2:E`,
+		range: `${contactList.contactList}!${contactList.scansheet}`,
 	});
 
-	const contactList = res.data.values;
+	const contactListFromExcel = res.data.values;
 
-	if (contactList.length) {
-		contactList.forEach((contact) => {
-			const phoneNumber = contact[0];
-			const name = contact[1];
-			sendMessage(phoneNumber, name, messageContent);
+	if (contactListFromExcel.length) {
+		contactListFromExcel.forEach((contact) => {
+			const phoneNumber = contact[5];
+			const name = contact[0];
+			let message =
+				messageContent[0][
+					contactList[contactList?.listType ? listType : "default"]
+				];
+
+			switch (listType) {
+				case "ambrish": //Ambrisho
+					if (contact[3] !== "") {
+						console.log(`${name} Bhai`);
+						console.log(message);
+						// sendMessage(phoneNumber, name, message);
+					}
+					break;
+				case "gharMandir": //GharMandir
+					if (contact[4] !== "") {
+						console.log(`${name} Bhai`);
+						console.log(message);
+						// sendMessage(phoneNumber, name, message);
+					}
+					break;
+				default: // FullList
+					console.log(`${name} Bhai`);
+					console.log(message);
+					// sendMessage(phoneNumber, name, message);
+					break;
+			}
+
+			// sendMessage(phoneNumber, name, message);
 		});
 	} else {
 		console.log("No data found.");
@@ -75,15 +107,15 @@ async function sendBulkMessage(listType) {
 const list = {
 	fullKitchenerYuvakoList: {
 		contactList: "FullKitchenerList",
-		message: "B1",
-	},
-	ambrish: {
-		contactList: "AmbrishBhaktoList",
-		message: "B2",
+		scansheet: "D3:I", //Test: A2:E
+		message: "B1:B3",
+		default: 0,
+		ambrish: 1,
+		gharMandir: 2,
 	},
 };
 
-sendBulkMessage(list.ambrish);
+sendBulkMessage(list.fullKitchenerYuvakoList, "gharMandir");
 
 /* Test in future
 const script = `
