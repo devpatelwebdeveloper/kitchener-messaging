@@ -70,14 +70,16 @@ async function sendBulkMessage(contactList, listType) {
 		contactListFromExcel.forEach((contact) => {
 			const phoneNumber = contact[5];
 			const name = contact[0];
-			let message =
-				messageContent[0][
-					contactList[contactList?.listType ? listType : "default"]
-				];
+			// console.log(`listType`, contactList[listType]);
+			// console.log(
+			// 	`Get`,
+			// 	contactList[contactList[listType] ? listType : "default"]
+			// );
+			let message = messageContent[1][0];
 
 			switch (listType) {
 				case "ambrish": //Ambrisho
-					if (contact[3] !== "") {
+					if (contact[3] !== "" && contact[3] === "Ambrish_Test") {
 						console.log(`${name} Bhai`);
 						console.log(message);
 						// sendMessage(phoneNumber, name, message);
@@ -85,14 +87,15 @@ async function sendBulkMessage(contactList, listType) {
 					break;
 				case "gharMandir": //GharMandir
 					if (contact[4] !== "") {
-						console.log(`${name} Bhai`);
-						console.log(message);
+						// console.log(`${name} Bhai`);
+						// console.log(message);
 						// sendMessage(phoneNumber, name, message);
 					}
 					break;
 				default: // FullList
 					console.log(`${name} Bhai`);
-					console.log(message);
+					// console.log(`${name} Bhai`);
+					// console.log(message);
 					// sendMessage(phoneNumber, name, message);
 					break;
 			}
@@ -112,10 +115,11 @@ const list = {
 		default: 0,
 		ambrish: 1,
 		gharMandir: 2,
+		testList: 3,
 	},
 };
 
-sendBulkMessage(list.fullKitchenerYuvakoList, "gharMandir");
+sendBulkMessage(list.fullKitchenerYuvakoList, "ambrish");
 
 /* Test in future
 const script = `
