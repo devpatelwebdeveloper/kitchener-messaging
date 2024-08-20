@@ -19,7 +19,7 @@ function escapeAppleScriptString(str) {
 		.replace(/\r/g, "\\r"); // Escape carriage returns
 }
 
-function sendMessage(phoneNumber, name, messageText) {
+function sendTextMessage(phoneNumber, name, messageText) {
 	const escapedMessage = escapeAppleScriptString(messageText);
 
 	// Construct the AppleScript command
@@ -82,25 +82,25 @@ async function sendBulkMessage(contactList, listType) {
 					if (contact[3] !== "" && contact[3] === "Ambrish_Test") {
 						console.log(`${name} Bhai`);
 						console.log(message);
-						// sendMessage(phoneNumber, name, message);
+						// sendTextMessage(phoneNumber, name, message);
 					}
 					break;
 				case "gharMandir": //GharMandir
 					if (contact[4] !== "") {
 						// console.log(`${name} Bhai`);
 						// console.log(message);
-						// sendMessage(phoneNumber, name, message);
+						// sendTextMessage(phoneNumber, name, message);
 					}
 					break;
 				default: // FullList
 					console.log(`${name} Bhai`);
 					// console.log(`${name} Bhai`);
 					// console.log(message);
-					// sendMessage(phoneNumber, name, message);
+					// sendTextMessage(phoneNumber, name, message);
 					break;
 			}
 
-			// sendMessage(phoneNumber, name, message);
+			// sendTextMessage(phoneNumber, name, message);
 		});
 	} else {
 		console.log("No data found.");
