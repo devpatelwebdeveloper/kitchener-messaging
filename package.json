@@ -5,11 +5,16 @@
   "main": "sendmessage.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sendinvitation": "node sendmessage.js"
+    "send:text": "node textMessagesender.js",
+    "send:whatsapp": "node whatsappsender.js",
+    "send:reminder":"pnpm run send:text && pnpm run send:whatsapp"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "googleapis": "^140.0.1"
+    "dotenv": "^16.4.5",
+    "googleapis": "^140.0.1",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.25.0"
   }
 }
