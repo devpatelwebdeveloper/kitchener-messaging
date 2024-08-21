@@ -1,7 +1,12 @@
 require("dotenv").config();
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const sendBulkMessage = require("./getContactListsAndMessage.js");
+const {
+	escapeAppleScriptString,
+	messageTextStartGreeting,
+} = require("./utils");
 const qrcode = require("qrcode-terminal");
+const data = require("./data.json");
 
 // Create a new client instance
 const client = new Client({
@@ -39,8 +44,9 @@ client.on("ready", async () => {
 	try {
 		// Get the contact list and message from sendBulkMessage
 		const { contactList, message } = await sendBulkMessage(
-			contactListConfig,
-			listType
+			data.contactListConfig,
+			data.listType,
+			(messageType = "whatsapp")
 		);
 
 		if (!contactList.length) {
@@ -49,8 +55,11 @@ client.on("ready", async () => {
 		}
 
 		// Loop to send message to each recipient with a delay of 5 seconds
-		for (const { phoneNumber } of contactList) {
-			await sendMessage(phoneNumber, message);
+		for (const { phoneNumber, name } of contactList) {
+			await sendMessage(
+				phoneNumber,
+				`${messageTextStartGreeting(name)} ${message}`
+			);
 
 			// Wait for 5 seconds before sending the next message
 			await new Promise((resolve) => setTimeout(resolve, 2000));

@@ -23,20 +23,19 @@ async function sendBulkMessage(contactList, listType, messageType = "text") {
 
 	const messageContent = messageResponse.data.values;
 	const contactListFromExcel = contactListResponse.data.values;
-
 	if (contactListFromExcel.length) {
 		const phoneList = [];
 		const message =
 			messageContent[
 				contactList[contactList[listType] ? listType : "default"]
 			][0];
-
 		contactListFromExcel.forEach((contact) => {
 			const phoneNumber = contact[5];
 			const name = contact[0];
 
 			if (
 				(listType === "ambrish" && contact[3] === "Ambrish") ||
+				(listType === "testList" && contact[3] === "Ambrish_Test") ||
 				(listType === "gharMandir" && contact[4] !== "") ||
 				listType === "default"
 			) {
@@ -49,7 +48,6 @@ async function sendBulkMessage(contactList, listType, messageType = "text") {
 				});
 			}
 		});
-		console.log({ contactList: phoneList, message });
 		return { contactList: phoneList, message };
 	} else {
 		return { contactList: [], message: "No data found." };

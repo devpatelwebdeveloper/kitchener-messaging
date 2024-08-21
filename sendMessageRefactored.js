@@ -1,3 +1,4 @@
+const { exec } = require("child_process");
 const sendBulkMessage = require("./getContactListsAndMessage.js");
 const {
 	escapeAppleScriptString,
@@ -41,7 +42,8 @@ const testFn = async () => {
 		// Get the contact list and message from sendBulkMessage
 		const { contactList, message } = await sendBulkMessage(
 			data.contactListConfig,
-			data.listType
+			data.listType,
+			(messageType = "text")
 		);
 
 		if (!contactList.length) {
@@ -50,9 +52,10 @@ const testFn = async () => {
 		}
 
 		// Loop to send message to each recipient with a delay of 5 seconds
-		for (const { phoneNumber } of contactList) {
+		for (const { phoneNumber, name } of contactList) {
 			// sendTextMessage(phoneNumber, message);
 			// await sendMessage(phoneNumber, message);
+			sendTextMessage(phoneNumber, name, message);
 
 			// Wait for 5 seconds before sending the next message
 			await new Promise((resolve) => setTimeout(resolve, 10));

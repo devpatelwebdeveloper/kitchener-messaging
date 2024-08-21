@@ -2,11 +2,11 @@
 "contactListConfig": {
     "contactList": "FullKitchenerList",
     "scansheet": "D3:I",
-    "message": "B1:B3",
+    "message": "B1:B4",
     "default": 0,
     "ambrish": 1,
     "gharMandir": 2,
     "testList": 3
   },
-  "listType":"ambrish"
+  "listType":"testList"
 }
