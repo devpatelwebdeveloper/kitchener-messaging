@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Client, LocalAuth } = require("whatsapp-web.js");
-const sendBulkMessage = require("./getContactList.js");
+const sendBulkMessage = require("./getContactListsAndMessage.js");
 const qrcode = require("qrcode-terminal");
 
 // Create a new client instance
@@ -11,7 +11,6 @@ const client = new Client({
 	}),
 });
 
-// Replace with your actual contact list and list type
 const contactListConfig = {
 	contactList: "FullKitchenerList",
 	scansheet: "D3:I",
@@ -22,9 +21,13 @@ const contactListConfig = {
 	testList: 3,
 };
 
-// Replace with your actual list type
+/**
+ *
+ * @param {string} listType - The type of list to be checked
+ */
+/* ************************ */
 const listType = "ambrish";
-
+/* ************************ */
 client.on("qr", (qr) => {
 	// Generate and display the QR code to scan with WhatsApp
 	qrcode.generate(qr, { small: true });

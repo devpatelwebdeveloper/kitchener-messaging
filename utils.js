@@ -24,4 +24,14 @@ function convertToWhatsAppFormat(phoneNumber) {
 	return cleanedNumber.substring(1) + "@c.us";
 }
 
-module.exports = { escapeAppleScriptString, convertToWhatsAppFormat };
+function messageTextStartGreeting(name) {
+	return `Das Na Das Na Jay Swaminarayan ${
+		name === "no_name" ? "Bhagat" : `${name} Bhai`
+	} \n\n`;
+}
+
+module.exports = {
+	escapeAppleScriptString,
+	convertToWhatsAppFormat,
+	messageTextStartGreeting,
+};

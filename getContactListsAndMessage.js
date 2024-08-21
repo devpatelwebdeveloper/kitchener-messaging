@@ -1,7 +1,7 @@
 // messageSender.js
 
 const { sheets, spreadsheetId } = require("./config"); // Make sure to configure and export sheets and spreadsheetId
-const { convertToWhatsAppFormat } = require("./utils"); // Import convertToWhatsAppFormat if it's in a separate file
+const { convertToWhatsAppFormat, escapeAppleScriptString } = require("./utils"); // Import convertToWhatsAppFormat if it's in a separate file
 
 /**
  * Retrieves and formats bulk messages from a Google Sheets spreadsheet.
@@ -9,7 +9,7 @@ const { convertToWhatsAppFormat } = require("./utils"); // Import convertToWhats
  * @param {string} listType - The type of list to use.
  * @returns {Promise<Object>} - An object containing the contact list and message.
  */
-async function sendBulkMessage(contactList, listType) {
+async function sendBulkMessage(contactList, listType, messageType = "text") {
 	const [messageResponse, contactListResponse] = await Promise.all([
 		sheets.spreadsheets.values.get({
 			spreadsheetId,
@@ -42,16 +42,18 @@ async function sendBulkMessage(contactList, listType) {
 			) {
 				phoneList.push({
 					name,
-					phoneNumber: convertToWhatsAppFormat(phoneNumber),
+					phoneNumber:
+						messageType === "whatsapp"
+							? convertToWhatsAppFormat(phoneNumber)
+							: phoneNumber,
 				});
 			}
 		});
-
+		console.log({ contactList: phoneList, message });
 		return { contactList: phoneList, message };
 	} else {
 		return { contactList: [], message: "No data found." };
 	}
 }
 
-// Export the function using CommonJS
 module.exports = sendBulkMessage;
