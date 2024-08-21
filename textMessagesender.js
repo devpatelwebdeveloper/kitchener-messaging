@@ -3,7 +3,7 @@ const sendBulkMessage = require("./getContactListsAndMessage.js");
 const {
 	escapeAppleScriptString,
 	messageTextStartGreeting,
-} = require("./utils");
+} = require("./utils.js");
 const data = require("./data.json");
 
 function sendTextMessage(phoneNumber, name, messageText) {

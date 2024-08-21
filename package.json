@@ -5,7 +5,9 @@
   "main": "sendmessage.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sendinvitation": "node sendmessage.js"
+    "send:text": "node textMessagesender.js",
+    "send:whatsapp": "node whatsappsender.js",
+    "send:reminder":"pnpm run send:text && pnpm run send:whatsapp"
   },
   "author": "",
   "license": "ISC",

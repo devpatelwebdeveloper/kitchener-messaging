@@ -4,7 +4,7 @@ const sendBulkMessage = require("./getContactListsAndMessage.js");
 const {
 	escapeAppleScriptString,
 	messageTextStartGreeting,
-} = require("./utils");
+} = require("./utils.js");
 const qrcode = require("qrcode-terminal");
 const data = require("./data.json");
 
