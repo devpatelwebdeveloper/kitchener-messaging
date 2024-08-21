@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const sendBulkMessage = require("./getContactListsAndMessage.js");
 const {
 	escapeAppleScriptString,
@@ -7,6 +7,7 @@ const {
 } = require("./utils.js");
 const qrcode = require("qrcode-terminal");
 const data = require("./data.json");
+const flyerPath = data.flyerPath;
 
 // Create a new client instance
 const client = new Client({
@@ -60,6 +61,11 @@ client.on("ready", async () => {
 				phoneNumber,
 				`${messageTextStartGreeting(name)} ${message}`
 			);
+			if (flyerPath) {
+				const media = MessageMedia.fromFilePath(flyerPath);
+				await client.sendMessage(phoneNumber, media);
+				console.log(`Image sent to ${phoneNumber}`);
+			}
 
 			// Wait for 5 seconds before sending the next message
 			await new Promise((resolve) => setTimeout(resolve, 2000));

@@ -8,5 +8,6 @@
     "gharMandir": 2,
     "testList": 3
   },
-  "listType":"testList"
+  "listType":"testList",
+  "flyerPath":"./flyers/APMaharaj16x20.jpg"
 }
