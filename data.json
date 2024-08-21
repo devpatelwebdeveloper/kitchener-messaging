@@ -9,5 +9,6 @@
     "testList": 3
   },
   "listType":"testList",
-  "flyerPath":"./flyers/APMaharaj16x20.jpg"
+  "flyerPath":null,
+  "routePath":"./flyers/routetolocation.jpg"
 }

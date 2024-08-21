@@ -8,6 +8,7 @@ const {
 const qrcode = require("qrcode-terminal");
 const data = require("./data.json");
 const flyerPath = data.flyerPath;
+const routePath = data.routePath;
 
 // Create a new client instance
 const client = new Client({
@@ -63,8 +64,13 @@ client.on("ready", async () => {
 			);
 			if (flyerPath) {
 				const media = MessageMedia.fromFilePath(flyerPath);
+
 				await client.sendMessage(phoneNumber, media);
-				console.log(`Image sent to ${phoneNumber}`);
+				await client.sendMessage(
+					phoneNumber,
+					MessageMedia.fromFilePath(routePath)
+				);
+				console.log(`Flyer and route sent to ${name} @ ${phoneNumber}`);
 			}
 
 			// Wait for 5 seconds before sending the next message
