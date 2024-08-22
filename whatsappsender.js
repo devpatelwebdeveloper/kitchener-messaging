@@ -7,8 +7,8 @@ const {
 } = require("./utils.js");
 const qrcode = require("qrcode-terminal");
 const data = require("./data.json");
-const flyerPath = data.flyerPath;
-const routePath = data.routePath;
+const flyerPath = `./flyers/${data.flyerPath}`;
+const routePath = `./flyers/${data.routePath}`;
 
 // Create a new client instance
 const client = new Client({
@@ -17,16 +17,6 @@ const client = new Client({
 		dataPath: "./sessions",
 	}),
 });
-
-const contactListConfig = {
-	contactList: "FullKitchenerList",
-	scansheet: "D3:I",
-	message: "B1:B3",
-	default: 0,
-	ambrish: 1,
-	gharMandir: 2,
-	testList: 3,
-};
 
 /**
  *
@@ -55,29 +45,32 @@ client.on("ready", async () => {
 			console.log("No contacts found.");
 			return;
 		}
-
 		// Loop to send message to each recipient with a delay of 5 seconds
 		for (const { phoneNumber, name } of contactList) {
-			await sendMessage(
-				phoneNumber,
-				`${messageTextStartGreeting(name)} ${message}`
-			);
 			if (flyerPath) {
 				const media = MessageMedia.fromFilePath(flyerPath);
 
-				await client.sendMessage(phoneNumber, media);
+				await client.sendMessage(phoneNumber, media, name);
 				await client.sendMessage(
 					phoneNumber,
-					MessageMedia.fromFilePath(routePath)
+					MessageMedia.fromFilePath(routePath),
+					name
 				);
 				console.log(`Flyer and route sent to ${name} @ ${phoneNumber}`);
 			}
+			await sendMessage(
+				phoneNumber,
+				`${messageTextStartGreeting(name)} ${message}`,
+				name
+			);
 
 			// Wait for 5 seconds before sending the next message
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+			await new Promise((resolve) => setTimeout(resolve, data.timeinterval));
 		}
 
-		console.log("All messages sent. Disconnecting client...");
+		console.log(
+			`All messages sent. Total message sent: ${contactList.length} Disconnecting client...`
+		);
 		await client.logout();
 		client.destroy();
 	} catch (error) {
@@ -112,7 +105,7 @@ async function sendMessage(to, message) {
 		}
 
 		await chat.sendMessage(message);
-		console.log(`Message sent to ${to}: ${message}`);
+		console.log(`Message sent to ${to}`);
 	} catch (error) {
 		console.error("Error sending message:", error);
 	}

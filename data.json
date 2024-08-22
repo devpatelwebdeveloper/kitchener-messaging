@@ -1,4 +1,5 @@
 {
+"timeinterval":2000,
 "contactListConfig": {
     "contactList": "FullKitchenerList",
     "scansheet": "D3:I",
@@ -9,6 +10,6 @@
     "testList": 3
   },
   "listType":"testList",
-  "flyerPath":null,
-  "routePath":"./flyers/routetolocation.jpg"
+  "flyerPath":"flyer-aug-22-2024.jpg",
+  "routePath":"routetolocation.jpg"
 }

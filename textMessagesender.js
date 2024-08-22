@@ -50,11 +50,9 @@ const testFn = async () => {
 			console.log("No contacts found.");
 			return;
 		}
-
 		// Loop to send message to each recipient with a delay of 5 seconds
 		for (const { phoneNumber, name } of contactList) {
-			// sendTextMessage(phoneNumber, message);
-			// await sendMessage(phoneNumber, message);
+			console.log(`${name}: ${phoneNumber}`);
 			sendTextMessage(phoneNumber, name, message);
 
 			// Wait for 5 seconds before sending the next message

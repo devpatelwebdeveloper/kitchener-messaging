@@ -50,7 +50,7 @@ async function sendMessage(to, message) {
 		}
 
 		await chat.sendMessage(message);
-		console.log(`Message sent to ${to}: ${message}`);
+		console.log(`Message sent to ${to}`);
 	} catch (error) {
 		console.error("Error sending message:", error);
 	}
