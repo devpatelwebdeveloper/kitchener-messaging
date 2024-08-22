@@ -1,5 +1,5 @@
 {
-"timeinterval":2000,
+"timeinterval":3000,
 "contactListConfig": {
     "contactList": "FullKitchenerList",
     "scansheet": "D3:I",

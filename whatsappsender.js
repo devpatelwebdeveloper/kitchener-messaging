@@ -64,7 +64,7 @@ client.on("ready", async () => {
 				name
 			);
 
-			// Wait for 5 seconds before sending the next message
+			// Wait for 3 seconds before sending the next message
 			await new Promise((resolve) => setTimeout(resolve, data.timeinterval));
 		}
 
