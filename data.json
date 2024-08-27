@@ -1,5 +1,5 @@
 {
-"timeinterval":3000,
+"timeinterval":5000,
 "contactListConfig": {
     "contactList": "FullKitchenerList",
     "scansheet": "D3:I",
@@ -9,7 +9,8 @@
     "gharMandir": 2,
     "testList": 3
   },
-  "listType":"testList",
-  "flyerPath":"flyer-aug-22-2024.jpg",
+  "listType":"gharMandir",
+  "flyerType":"outdoor",
+  "flyerPath":"WhatsApp Image 2024-08-26 at 9.10.59 PM.jpeg",
   "routePath":"routetolocation.jpg"
 }

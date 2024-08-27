@@ -51,12 +51,14 @@ client.on("ready", async () => {
 				const media = MessageMedia.fromFilePath(flyerPath);
 
 				await client.sendMessage(phoneNumber, media, name);
-				await client.sendMessage(
-					phoneNumber,
-					MessageMedia.fromFilePath(routePath),
-					name
-				);
-				console.log(`Flyer and route sent to ${name} @ ${phoneNumber}`);
+				if (data.flyerType === "sabha") {
+					await client.sendMessage(
+						phoneNumber,
+						MessageMedia.fromFilePath(routePath),
+						name
+					);
+					console.log(`Flyer and route sent to ${name} @ ${phoneNumber}`);
+				}
 			}
 			await sendMessage(
 				phoneNumber,
