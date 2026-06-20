@@ -17,5 +17,6 @@
   "flyerType":"sabha",
   "flyerPath":"bhajan_jamming_7days.jpeg",
   "pdfPath": "bhajan_jammin_pdf.pdf",
-  "eventAddress": "85 Boxwood Dr Cambridge, ON N3E 0A5"
+  "eventAddress": "85 Boxwood Dr Cambridge, ON N3E 0A5",
+  "useCurrentLocation": false
 }
