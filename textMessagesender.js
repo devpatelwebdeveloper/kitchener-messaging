@@ -4,7 +4,9 @@ const {
 	escapeAppleScriptString,
 	messageTextStartGreeting,
 } = require("./utils.js");
-const data = require("./data.json");
+const configArg = process.argv[2];
+const dataFile = configArg ? `./data-${configArg}.json` : "./data.json";
+const data = require(dataFile);
 
 function sendTextMessage(phoneNumber, name, messageText) {
 	const escapedMessage = escapeAppleScriptString(messageText);
@@ -43,7 +45,8 @@ const testFn = async () => {
 		const { contactList, message } = await sendBulkMessage(
 			data.contactListConfig,
 			data.listType,
-			(messageType = "text")
+			"text",
+			data.spreadsheetId
 		);
 
 		if (!contactList.length) {

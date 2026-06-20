@@ -1,0 +1,21 @@
+{
+"spreadsheetId": "1yl-45mr46XppGxeIf_oqWeW0yK6pn6PvLHHLIRVJPqE",
+"timeinterval":5000,
+"contactListConfig": {
+    "contactList": "Form Responses 1",
+    "scansheet": "A2:J",
+    "message": "B1:B4",
+    "default": 0,
+    "ambrish": 1,
+    "gharMandir": 2,
+    "testList": 3,
+    "nameColumn": 2,
+    "phoneColumn": 3,
+    "addressColumn": 4
+  },
+  "listType":"default",
+  "flyerType":"sabha",
+  "flyerPath":"bhajan_jamming_7days.jpeg",
+  "pdfPath": "bhajan_jammin_pdf.pdf",
+  "eventAddress": "85 Boxwood Dr Cambridge, ON N3E 0A5"
+}

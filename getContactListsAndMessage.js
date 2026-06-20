@@ -1,6 +1,6 @@
 // messageSender.js
 
-const { sheets, spreadsheetId } = require("./config"); // Make sure to configure and export sheets and spreadsheetId
+const { sheets } = require("./config"); // Make sure to configure and export sheets and spreadsheetId
 const { convertToWhatsAppFormat, escapeAppleScriptString } = require("./utils"); // Import convertToWhatsAppFormat if it's in a separate file
 
 /**
@@ -9,7 +9,7 @@ const { convertToWhatsAppFormat, escapeAppleScriptString } = require("./utils");
  * @param {string} listType - The type of list to use.
  * @returns {Promise<Object>} - An object containing the contact list and message.
  */
-async function sendBulkMessage(contactList, listType, messageType = "text") {
+async function sendBulkMessage(contactList, listType, messageType = "text", spreadsheetId) {
 	const [messageResponse, contactListResponse] = await Promise.all([
 		sheets.spreadsheets.values.get({
 			spreadsheetId,
@@ -30,8 +30,8 @@ async function sendBulkMessage(contactList, listType, messageType = "text") {
 				contactList[contactList[listType] ? listType : "default"]
 			][0];
 		contactListFromExcel.forEach((contact) => {
-			const phoneNumber = contact[5];
-			const name = contact[0];
+			const phoneNumber = contact[contactList.phoneColumn];
+			const name = contact[contactList.nameColumn];
 
 			if (
 				(listType === "ambrish" && contact[3] === "Ambrish") ||
@@ -45,6 +45,7 @@ async function sendBulkMessage(contactList, listType, messageType = "text") {
 						messageType === "whatsapp"
 							? convertToWhatsAppFormat(phoneNumber)
 							: phoneNumber,
+					address: contactList.addressColumn !== undefined ? contact[contactList.addressColumn] : null,
 				});
 			}
 		});

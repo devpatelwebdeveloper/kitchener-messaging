@@ -9,7 +9,4 @@ const auth = new google.auth.GoogleAuth({
 // Initialize the Google Sheets API client
 const sheets = google.sheets({ version: "v4", auth });
 
-// const spreadsheetId = "1HOJWpBDCLSpiUeklifzmOQ3ySiVa9P0B_7rRr_l9ci0"; Devashish Test Sheet
-const spreadsheetId = "1K10lmYSNGEfnDfj13N858umGQ6wpnVkaDQiIJ59XdzA";
-
-module.exports = { sheets, spreadsheetId };
+module.exports = { sheets };

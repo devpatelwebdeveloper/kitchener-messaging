@@ -1,4 +1,5 @@
 {
+"spreadsheetId": "1K10lmYSNGEfnDfj13N858umGQ6wpnVkaDQiIJ59XdzA",
 "timeinterval":5000,
 "contactListConfig": {
     "contactList": "FullKitchenerList",
@@ -7,10 +8,12 @@
     "default": 0,
     "ambrish": 1,
     "gharMandir": 2,
-    "testList": 3
+    "testList": 3,
+    "nameColumn": 0,
+    "phoneColumn": 5
   },
-  "listType":"gharMandir",
-  "flyerType":"outdoor",
-  "flyerPath":"WhatsApp Image 2024-08-26 at 9.10.59 PM.jpeg",
-  "routePath":"routetolocation.jpg"
+  "listType":"default",
+  "flyerType":"sabha",
+  "flyerPath":"bhajan_jamming_7days.jpeg",
+  "routePath":"routetolocation.jpeg"
 }

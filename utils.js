@@ -18,17 +18,25 @@ function escapeAppleScriptString(str) {
  */
 function convertToWhatsAppFormat(phoneNumber) {
 	const cleanedNumber = phoneNumber.replace(/[^+\d]/g, "");
-	if (!cleanedNumber.startsWith("+")) {
-		throw new Error("Phone number must include a country code with + sign.");
+	if (cleanedNumber.startsWith("+")) {
+		return cleanedNumber.substring(1) + "@c.us";
 	}
-	return cleanedNumber.substring(1) + "@c.us";
+	// 10-digit North American number — prepend country code 1
+	if (cleanedNumber.length === 10) {
+		return "1" + cleanedNumber + "@c.us";
+	}
+	throw new Error(`Cannot format phone number: ${phoneNumber}`);
 }
 
 function messageTextStartGreeting(name) {
-	return `Das Na Das Na Jay Swaminarayan ${
-		name === "no_name" ? "Bhagat" : `${name} Bhai`
-	} \n\n`;
+	return `Jay Swaminarayan, Jay Shree Krishna ${name} \n\n`;
 }
+
+// function messageTextStartGreeting(name) {
+// 	return `Das Na Das Na Jay Swaminarayan ${
+// 		name === "no_name" ? "Bhagat" : `${name} Bhai`
+// 	} \n\n`;
+// }
 
 module.exports = {
 	escapeAppleScriptString,

@@ -6,7 +6,9 @@ const {
 	messageTextStartGreeting,
 } = require("./utils.js");
 const qrcode = require("qrcode-terminal");
-const data = require("./data.json");
+const configArg = process.argv[2];
+const dataFile = configArg ? `./data-${configArg}.json` : "./data.json";
+const data = require(dataFile);
 const flyerPath = `./flyers/${data.flyerPath}`;
 const routePath = `./flyers/${data.routePath}`;
 
@@ -16,6 +18,14 @@ const client = new Client({
 		clientId: "client1",
 		dataPath: "./sessions",
 	}),
+	puppeteer: {
+		executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+		args: ["--no-sandbox", "--disable-setuid-sandbox"],
+	},
+	webVersionCache: {
+		type: "remote",
+		remotePath: "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.3000.1015857474.html",
+	},
 });
 
 /**
@@ -38,7 +48,8 @@ client.on("ready", async () => {
 		const { contactList, message } = await sendBulkMessage(
 			data.contactListConfig,
 			data.listType,
-			(messageType = "whatsapp")
+			"whatsapp",
+			data.spreadsheetId
 		);
 
 		if (!contactList.length) {
@@ -46,23 +57,26 @@ client.on("ready", async () => {
 			return;
 		}
 		// Loop to send message to each recipient with a delay of 5 seconds
-		for (const { phoneNumber, name } of contactList) {
-			if (flyerPath) {
-				const media = MessageMedia.fromFilePath(flyerPath);
-
-				await client.sendMessage(phoneNumber, media, name);
-				if (data.flyerType === "sabha") {
-					await client.sendMessage(
-						phoneNumber,
-						MessageMedia.fromFilePath(routePath),
-						name
-					);
+		for (const { phoneNumber, name, address } of contactList) {
+			if (data.flyerPath) {
+				await client.sendMessage(phoneNumber, MessageMedia.fromFilePath(flyerPath));
+				if (data.flyerType === "sabha" && data.routePath) {
+					await client.sendMessage(phoneNumber, MessageMedia.fromFilePath(routePath));
 					console.log(`Flyer and route sent to ${name} @ ${phoneNumber}`);
 				}
 			}
+			if (data.pdfPath) {
+				const pdfMedia = MessageMedia.fromFilePath(`./flyers/${data.pdfPath}`);
+				await client.sendMessage(phoneNumber, pdfMedia);
+				console.log(`PDF sent to ${name} @ ${phoneNumber}`);
+			}
+			const directionsLink =
+				address && data.eventAddress
+					? `\n\n📍 Directions: https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(address)}&destination=${encodeURIComponent(data.eventAddress)}`
+					: "";
 			await sendMessage(
 				phoneNumber,
-				`${messageTextStartGreeting(name)} ${message}`,
+				`${messageTextStartGreeting(name)} ${message}${directionsLink}`,
 				name
 			);
 
