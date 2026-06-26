@@ -19,9 +19,10 @@
   "flyerType": "sabha",
   "eventAddress": "85 Boxwood Dr Cambridge, ON N3E 0A5",
   "pdfPath": "HP-Bhajan-Jamming-KWC-Welcome-Kit.pdf",
+  "useCurrentLocation": true,
   "testMode": true,
   "testContacts": [
     { "name": "Dev", "phoneNumber": "6473259161", "address": "2 Watermill St, Kitchener, ON" },
-    { "name": "Vasu", "phoneNumber": "5197211541", "address": "18 sandstone street, Cambridge, ON" }
+    { "name": "Vasu Patel", "phoneNumber": "5197211541", "address": "18 sandstone street, Cambridge, ON" }
   ]
 }

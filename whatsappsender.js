@@ -179,11 +179,11 @@ client.on("ready", async () => {
 					if (data.flyerType === "sabha" && data.routePath) {
 						await client.sendMessage(phoneNumber, MessageMedia.fromFilePath(routePath));
 					}
-				} else {
-					await sendMessage(phoneNumber, fullMessage, name);
 				}
 				if (data.pdfPath) {
 					await client.sendMessage(phoneNumber, MessageMedia.fromFilePath(`./flyers/${data.pdfPath}`), { caption: fullMessage });
+				} else if (!data.flyerPath) {
+					await sendMessage(phoneNumber, fullMessage, name);
 				}
 
 				completed++;
