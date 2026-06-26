@@ -18,6 +18,7 @@ function escapeAppleScriptString(str) {
  */
 function convertToWhatsAppFormat(phoneNumber) {
 	const cleanedNumber = phoneNumber.replace(/[^+\d]/g, "");
+	if (!cleanedNumber) return null;
 	if (cleanedNumber.startsWith("+")) {
 		return cleanedNumber.substring(1) + "@c.us";
 	}
@@ -25,11 +26,11 @@ function convertToWhatsAppFormat(phoneNumber) {
 	if (cleanedNumber.length === 10) {
 		return "1" + cleanedNumber + "@c.us";
 	}
-	throw new Error(`Cannot format phone number: ${phoneNumber}`);
+	return null;
 }
 
 function messageTextStartGreeting(name) {
-	return `Jay Swaminarayan, Jay Shree Krishna ${name} \n\n`;
+	return `Hello ${name},\n\n Jay Shree Krishna\n Jay Swaminarayan, \n\n`;
 }
 
 // function messageTextStartGreeting(name) {

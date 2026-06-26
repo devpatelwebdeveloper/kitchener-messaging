@@ -1,0 +1,27 @@
+{
+  "spreadsheetId": "1iurQu0UKJG3XUkHoX0gpemYzJG1RYFC-LVwLk3VNb28",
+  "minDelay": 5000,
+  "maxDelay": 8000,
+  "chunkSize": 50,
+  "contactListConfig": {
+    "contactList": "Form Responses 1",
+    "scansheet": "A2:J",
+    "message": "B1:B4",
+    "default": 0,
+    "ambrish": 1,
+    "gharMandir": 2,
+    "testList": 3,
+    "nameColumn": 2,
+    "phoneColumn": 3,
+    "addressColumn": 4
+  },
+  "listType": "testList",
+  "flyerType": "sabha",
+  "eventAddress": "85 Boxwood Dr Cambridge, ON N3E 0A5",
+  "pdfPath": "HP-Bhajan-Jamming-KWC-Welcome-Kit.pdf",
+  "testMode": true,
+  "testContacts": [
+    { "name": "Dev", "phoneNumber": "6473259161", "address": "2 Watermill St, Kitchener, ON" },
+    { "name": "Vasu", "phoneNumber": "5197211541", "address": "18 sandstone street, Cambridge, ON" }
+  ]
+}

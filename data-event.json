@@ -1,6 +1,9 @@
 {
 "spreadsheetId": "1yl-45mr46XppGxeIf_oqWeW0yK6pn6PvLHHLIRVJPqE",
-"timeinterval":5000,
+"minDelay": 15000,
+"maxDelay": 45000,
+"chunkSize": 20,
+"maxSend": 50,
 "contactListConfig": {
     "contactList": "Form Responses 1",
     "scansheet": "A2:J",
@@ -15,8 +18,7 @@
   },
   "listType":"default",
   "flyerType":"sabha",
-  "flyerPath":"bhajan_jamming_7days.jpeg",
-  "pdfPath": "bhajan_jammin_pdf.pdf",
   "eventAddress": "85 Boxwood Dr Cambridge, ON N3E 0A5",
-  "useCurrentLocation": false
+  "pdfPath": "HP-Bhajan-Jamming-KWC-Welcome-Kit.pdf"
+
 }

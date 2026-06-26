@@ -1,11 +1,12 @@
-const { exec } = require("child_process");
+require("dotenv").config();
 const fs = require("fs");
+const twilio = require("twilio");
 const sendBulkMessage = require("./getContactListsAndMessage.js");
-const { escapeAppleScriptString, messageTextStartGreeting } = require("./utils.js");
+const { messageTextStartGreeting, convertToWhatsAppFormat } = require("./utils.js");
 
 const configArg = process.argv[2];
 const dataFile = configArg ? `./data-${configArg}.json` : "./data.json";
-const logFile = configArg ? `./logs/run-text-${configArg}.log` : "./logs/run-text.log";
+const logFile = configArg ? `./logs/run-twilio-${configArg}.log` : "./logs/run-twilio.log";
 const progressFile = configArg ? `./logs/progress-${configArg}.json` : "./logs/progress.json";
 fs.mkdirSync("./logs", { recursive: true });
 const logStream = fs.createWriteStream(logFile, { flags: "a" });
@@ -33,36 +34,19 @@ process.on("SIGINT", () => {
 	process.exit(0);
 });
 
-function formatForSMS(phoneNumber) {
-	const digits = phoneNumber.replace(/\D/g, "");
-	if (digits.length === 10) return `+1${digits}`;
-	if (digits.length === 11 && digits.startsWith("1")) return `+${digits}`;
-	return `+${digits}`;
-}
-
-function sendTextMessage(phoneNumber, name, messageText) {
-	return new Promise((resolve, reject) => {
-		const formattedNumber = formatForSMS(phoneNumber);
-		const escapedMessage = escapeAppleScriptString(messageText);
-		const script = `
-			tell application "Messages"
-				set targetService to 1st service whose service type = SMS
-				set targetParticipant to participant "${formattedNumber}" of targetService
-				send "${messageTextStartGreeting(name)} ${escapedMessage}" to targetParticipant
-			end tell
-		`;
-		const escapedScript = script.replace(/'/g, "\\'");
-		exec(`osascript -e '${escapedScript}'`, { timeout: 15000, killSignal: "SIGKILL" }, (error, _stdout, stderr) => {
-			if (error && error.killed) return reject(new Error("Messages app timed out — possibly showing a delivery alert"));
-			if (error) return reject(error);
-			if (stderr) return reject(new Error(stderr));
-			resolve();
-		});
-	});
-}
-
 const run = async () => {
 	const data = require(dataFile);
+
+	const accountSid = process.env.TWILIO_ACCOUNT_SID;
+	const authToken = process.env.TWILIO_AUTH_TOKEN;
+	const fromNumber = process.env.TWILIO_WHATSAPP_NUMBER;
+
+	if (!accountSid || !authToken || !fromNumber) {
+		console.error("Missing TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN or TWILIO_WHATSAPP_NUMBER in .env");
+		process.exit(1);
+	}
+
+	const client = twilio(accountSid, authToken);
 
 	let contactList, message;
 	if (data.testMode) {
@@ -71,13 +55,17 @@ const run = async () => {
 			range: `Message!${data.contactListConfig.message}`,
 		});
 		message = msgResponse.data.values[data.contactListConfig.default][0];
-		contactList = data.testContacts;
+		const { convertToWhatsAppFormat } = require("./utils");
+		contactList = data.testContacts.map((c) => ({
+			...c,
+			phoneNumber: convertToWhatsAppFormat(c.phoneNumber),
+		})).filter((c) => c.phoneNumber);
 		log(`TEST MODE — sending to ${contactList.length} test contact(s) only`);
 	} else {
 		({ contactList, message } = await sendBulkMessage(
 			data.contactListConfig,
 			data.listType,
-			"text",
+			"whatsapp",
 			data.spreadsheetId
 		));
 	}
@@ -106,20 +94,20 @@ const run = async () => {
 	}
 
 	const chunkSize = data.chunkSize ?? 20;
-	const maxSend = data.maxSend ?? Infinity;
 	const total = uniqueContacts.length;
 	let completed = alreadySent;
 	let failed = 0;
 
 	for (let i = 0; i < remaining.length; i++) {
-		if (completed - alreadySent >= maxSend) {
-			log(`Reached maxSend limit of ${maxSend}. Stopping. Run again to continue.`);
-			break;
-		}
 		const { phoneNumber, name } = remaining[i];
+		const fullMessage = `${messageTextStartGreeting(name)} ${message}`;
 
 		try {
-			await sendTextMessage(phoneNumber, name, message);
+			await client.messages.create({
+				from: `whatsapp:+${fromNumber.replace(/^\+/, "")}`,
+				to: `whatsapp:+${phoneNumber.replace("@c.us", "")}`,
+				body: fullMessage,
+			});
 			completed++;
 			progress[phoneNumber] = "✅";
 			saveProgress(progress);
@@ -133,15 +121,15 @@ const run = async () => {
 
 		if (completed % chunkSize === 0 && i < remaining.length - 1) {
 			await new Promise((resolve) => setTimeout(resolve, 3000));
-			log(`\n--- Chunk of ${chunkSize} sent. Taking a break — press Enter to continue...`);
+			log(`\n--- Chunk of ${chunkSize} sent. Pausing — press Enter to continue...`);
 			await new Promise((resolve) => {
 				const rl = require("readline").createInterface({ input: process.stdin, output: process.stdout });
 				rl.question("", () => { rl.close(); resolve(); });
 			});
 			log("Resuming...");
 		} else {
-			const minDelay = data.minDelay ?? 15000;
-			const maxDelay = data.maxDelay ?? 45000;
+			const minDelay = data.minDelay ?? 2000;
+			const maxDelay = data.maxDelay ?? 5000;
 			const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
 			log(`Waiting ${(delay / 1000).toFixed(1)}s before next message...`);
 			await new Promise((resolve) => setTimeout(resolve, delay));

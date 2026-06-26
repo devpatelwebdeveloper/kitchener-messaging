@@ -39,12 +39,18 @@ async function sendBulkMessage(contactList, listType, messageType = "text", spre
 				(listType === "gharMandir" && contact[4] !== "") ||
 				listType === "default"
 			) {
+				if (!phoneNumber || phoneNumber === "NA") {
+					console.log(`Skipping ${name} — no phone number`);
+					return;
+				}
+				const formattedNumber = messageType === "whatsapp" ? convertToWhatsAppFormat(phoneNumber) : phoneNumber;
+				if (!formattedNumber) {
+					console.log(`Skipping ${name} — invalid phone number: ${phoneNumber}`);
+					return;
+				}
 				phoneList.push({
 					name,
-					phoneNumber:
-						messageType === "whatsapp"
-							? convertToWhatsAppFormat(phoneNumber)
-							: phoneNumber,
+					phoneNumber: formattedNumber,
 					address: contactList.addressColumn !== undefined ? contact[contactList.addressColumn] : null,
 				});
 			}
